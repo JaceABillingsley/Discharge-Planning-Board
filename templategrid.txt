@@ -1,0 +1,18 @@
+class Gridcreator {
+  constructor() {
+    
+  }
+}
+
+function creategrid(roomMin, roomMax) {
+  var list = []
+  for (i = 0; i < max-min; i++) {
+    var roomNumber = i + min;
+    list.push(new Patient(roomNumber))
+  }
+  new gridjs.Grid({
+  columns: [{name:"Room #", width:"10px"}, {name:"Patient", width:"20px"}, {name:"Provider", width:"10px"}, {name:"LOS", width:"10px"}, {name:"ELOS", width:"10px"}, {name:"Admit", width:"10px"}, {name:"Target", width:"10px"}],
+  rows: ['1'],
+  data: list
+}).render(document.getElementById("wrapper"));
+}

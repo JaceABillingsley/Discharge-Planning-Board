@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+      rel="stylesheet" />
+    <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+form button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 13.42%;
+}
+      
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  border: 1px solid #888;
+  width: 100%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+  </head>
+  <body>
+    <a href='/'><button width='10px;'>Go To View Only Mode</button></a>
+    <div id="wrapper"></div>
+      <div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/pushdata" method="post">
+
+    <div class="container">
+      <label for="roomNumber"><b>Room Number</b></label>
+      <input id="roomNumber" type="text" placeholder="Room Number" name="roomNumber" readonly="readonly">
+
+      <label for="patient"><b>Patient</b></label>
+      <input id='patient' type="text" value="Patient" placeholder="Patient" name="patient">
+
+      <label for="provider"><b>Provider</b></label>
+      <input id='provider' type="text" value="Provider" placeholder="Provider" name="provider">
+
+      <label for="rn"><b>RN</b></label>
+      <input id='rn' type="text" placeholder="rn" name="rn">
+        
+      <label for="status"><b>Status</b></label>
+      <input id='status' type="text" placeholder="Status" name="status">
+
+      <label for="admit"><b>Admit</b></label>
+      <input id='admit' type="text" placeholder="Admit" name="admit">
+
+      <label for="target"><b>Target</b></label>
+      <input id='target' type="text" placeholder="Target" name="target">
+
+      <label for="los"><b>LOS</b></label>
+      <input id='los' type="text" placeholder="LOS" name="los">
+
+      <label for="elos"><b>ELOS</b></label>
+      <input id='elos' type="text" placeholder="ELOS" name="elos">
+
+      <label for="ryg"><b>RYG</b></label>
+      <br></br>
+      &nbsp; <input type="radio" id="r" name="ryg" value='R'>
+      <label for="r">Red</label><br>
+      <input type="radio" id="y" name="ryg" value="Y">
+      <label for="y">Yellow</label><br>
+      <input type="radio" id="g" name="ryg" value="G">
+      <label for="g">Green</label><br>
+      &nbsp; <input type="radio" id="-" name="ryg" value="-">
+      <label for="-">None</label>
+      <br></br>
+
+      <label for="dcby11"><b>D/C By 11:00</b></label>
+      <input id='dcby11' type="text" placeholder="D/C By 11:00" name="dcby11">
+
+      <label for="dcplan"><b>D/C Plan</b></label>
+      <input id='dcplan' type="text" placeholder="D/C Plan" name="dcplan">
+
+      <label for="barrier1"><b>Barrier 1</b></label>
+      <input id='barrier1' type="text" placeholder="Barrier 1" name="barrier1">
+
+      <label for="barrier2"><b>Barrier 2</b></label>
+      <input id='barrier2' type="text" placeholder="Barrier 2" name="barrier2">
+
+      <label for="readmissionrisk"><b>Readmission Risk</b></label>
+      <input id='readmissionrisk' type="text" placeholder="Readmission Risk" name="readmissionrisk">
+
+      <label for="tele"><b>Tele</b></label>
+      <input id='tele' type="text" placeholder="Tele" name="tele">
+      
+      <button type="submit">Update Patient Data</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+    <script src="https://unpkg.com/gridjs@5.0.2/dist/gridjs.umd.js"></script>
+    <script src="script.js"></script>
+    <script type="module">
+    import { Grid, html } from "https://unpkg.com/gridjs?module";
+    </script>
+  </body>
+</html>
