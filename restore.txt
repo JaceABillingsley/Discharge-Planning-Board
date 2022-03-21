@@ -1,0 +1,34 @@
+// router.get('/restoredata',function(req,res){
+//   fs.readFile('files/test.json', (err, data) => {
+//     if (err) throw err;
+//     var jsondata = JSON.parse(data);
+//     for (i=0; i<21; i++) {
+//       var y = `r${i}`
+//       jsondata[0][y].patient = '-'
+//       jsondata[0][y].provider = '-'
+//       jsondata[0][y].rn = '-'
+//       jsondata[0][y].status = '-'
+//       jsondata[0][y].admit = '-'
+//       jsondata[0][y].target = '-'
+//       jsondata[0][y].los = '-'
+//       jsondata[0][y].elos = '-'
+//       var rygoptions = '-'
+//       jsondata[0][y].dcby11 = '-'
+//       jsondata[0][y].dcplan = '-'
+//       jsondata[0][y].barrier1 = '-'
+//       jsondata[0][y].barrier2 = '-'
+//       jsondata[0][y].readmissionrisk = '-'
+//       jsondata[0][y].tele = '-'
+//       if(rygoptions == 'r') {jsondata[0][y].ryg = '🔴'}
+//       if(rygoptions == 'y') {jsondata[0][y].ryg = '🟡'}
+//       if(rygoptions == 'g') {jsondata[0][y].ryg = '🟢'}
+//       if(rygoptions == '-') {jsondata[0][y].ryg = '⚪'}
+//     }
+
+//     newdata = JSON.stringify(jsondata)
+//     fs.writeFile('files/test.json', newdata, (err) => {
+//     if (err) throw err;
+//     res.redirect('/edit');
+//   });
+//   });
+// })

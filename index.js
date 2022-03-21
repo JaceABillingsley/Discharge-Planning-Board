@@ -21,39 +21,31 @@ app.post('/pushdata', function (req, res) {
     if (err) throw err;
     var jsondata = JSON.parse(data);
     var y = `r${j.roomNumber-1}`
-    jsondata[0][y].patient = j.patient;
-    jsondata[0][y].provider = j.provider;
-    jsondata[0][y].rn = j.rn;
-    jsondata[0][y].status = j.status;
-    jsondata[0][y].admit = j.admit;
-    jsondata[0][y].target = j.target;
-    jsondata[0][y].los = j.los;
-    jsondata[0][y].elos = j.elos;
+    function replaceEmptySpace(value) {
+      for (var i = 0; i < 15; i++) {
+        if (j[value[i]] == '') {jsondata[0][y][value[i]] = '-';}
+        else {jsondata[0][y][value[i]] = j[value[i]];}
+      }
+    }
+    replaceEmptySpace(["patient", 'provider', 'rn', 'status', 'admit', 'target', 'los', 'elos', 'dcplan', 'barrier1', 'barrier2']);
     var rygoptions = j.ryg.toLowerCase();
     var dcby11options = j.dcby11.toLowerCase();
     var readmissionrisk = j.readmissionrisk.toLowerCase();
     var teleoptions = j.tele.toLowerCase();
-    jsondata[0][y].dcby11 = j.dcby11;
-    jsondata[0][y].dcplan = j.dcplan;
-    jsondata[0][y].barrier1 = j.barrier1;
-    jsondata[0][y].barrier2 = j.barrier2;
-    jsondata[0][y].readmissionrisk = j.readmissionrisk;
-    jsondata[0][y].tele = j.tele;
     if(rygoptions == 'r') {jsondata[0][y].ryg = '🔴'}
-    if(rygoptions == 'y') {jsondata[0][y].ryg = '🟡'}
-    if(rygoptions == 'g') {jsondata[0][y].ryg = '🟢'}
-    if(rygoptions == '-') {jsondata[0][y].ryg = '⚪'}
+    else if(rygoptions == 'y') {jsondata[0][y].ryg = '🟡'}
+    else if(rygoptions == 'g') {jsondata[0][y].ryg = '🟢'}
+    else if(rygoptions == '-') {jsondata[0][y].ryg = '⚪'}
     if(dcby11options == 'n') {jsondata[0][y].dcby11 = '❌'}
-    if(dcby11options == 'y') {jsondata[0][y].dcby11 = '✔️'}
-    if(dcby11options == '-') {jsondata[0][y].dcby11 = '-'}
+    else if(dcby11options == 'y') {jsondata[0][y].dcby11 = '✔️'}
+    else if(dcby11options == '-') {jsondata[0][y].dcby11 = '-'}
     if(readmissionrisk == 'n') {jsondata[0][y].readmissionrisk = '❌'}
-    if(readmissionrisk == 'y') {jsondata[0][y].readmissionrisk = '✔️'}
-    if(readmissionrisk == 'h') {jsondata[0][y].readmissionrisk = '❗️'}
-    if(readmissionrisk == '-') {jsondata[0][y].readmissionrisk = '-'}
+    else if(readmissionrisk == 'y') {jsondata[0][y].readmissionrisk = '✔️'}
+    else if(readmissionrisk == 'h') {jsondata[0][y].readmissionrisk = '❗️'}
+    else if(readmissionrisk == '-') {jsondata[0][y].readmissionrisk = '-'}
     if(teleoptions == 'n') {jsondata[0][y].tele = '❌'}
-    if(teleoptions == 'y') {jsondata[0][y].tele = '✔️'}
-    if(teleoptions == '-') {jsondata[0][y].tele = '-'}
-    
+    else if(teleoptions == 'y') {jsondata[0][y].tele = '✔️'}
+    else if(teleoptions == '-') {jsondata[0][y].tele = '-'}
     newdata = JSON.stringify(jsondata)
     fs.writeFile('files/test.json', newdata, (err) => {
     if (err) throw err;
