@@ -1,4 +1,2 @@
 ✔️
 ❌
-
-git remote add origin git@github.com:Breeze0505/DischargePlanning.git
