@@ -184,7 +184,14 @@ span.psw {
       <br></br>
 
       <label for="dcby11"><b>D/C By 11:00</b></label>
-      <input id='dcby11' type="text" placeholder="D/C By 11:00" name="dcby11">
+      <br></br>
+      &nbsp; <input type="radio" id="dcby11yes" name="dcby11" value='Y'>
+      <label for="dcby11yes">Yes</label><br>
+      <input type="radio" id="dcby11no" name="dcby11" value="N">
+      <label for="dcby11no">No</label><br>
+      <input type="radio" id="dcby11unsure" name="dcby11" value="-">
+      <label for="dcby11unsure">Unsure</label><br>
+      <br></br>
 
       <label for="dcplan"><b>D/C Plan</b></label>
       <input id='dcplan' type="text" placeholder="D/C Plan" name="dcplan">
@@ -196,11 +203,27 @@ span.psw {
       <input id='barrier2' type="text" placeholder="Barrier 2" name="barrier2">
 
       <label for="readmissionrisk"><b>Readmission Risk</b></label>
-      <input id='readmissionrisk' type="text" placeholder="Readmission Risk" name="readmissionrisk">
+      <br></br>
+      &nbsp; <input type="radio" id="readmissionriskyes" name="readmissionrisk" value='Y'>
+      <label for="readmissionrisk">Yes</label><br>
+      <input type="radio" id="readmissionriskno" name="readmissionrisk" value="N">
+      <label for="readmissionrisk">No</label><br>
+      <input type="radio" id="readmissionriskhigh" name="readmissionrisk" value="H">
+      <label for="readmissionrisk">High</label><br>
+      <input type="radio" id="readmissionriskunsure" name="readmissionrisk" value="-">
+      <label for="readmissionrisk">Unsure</label><br>
+      <br></br>
 
       <label for="tele"><b>Tele</b></label>
-      <input id='tele' type="text" placeholder="Tele" name="tele">
-      
+      <br></br>
+      &nbsp; <input type="radio" id="teleyes" name="tele" value='Y'>
+      <label for="tele">Yes</label><br>
+      <input type="radio" id="teleno" name="tele" value="N">
+      <label for="tele">No</label><br>
+      <input type="radio" id="teleunsure" name="tele" value="-">
+      <label for="tele">Unsure</label><br>
+      <br></br>      
+      <br></br>
       <button type="submit">Update Patient Data</button>
     </div>
 

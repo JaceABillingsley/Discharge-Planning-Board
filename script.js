@@ -60,6 +60,19 @@ function runCell(args){
   if(savedData[0][y].ryg == '🟡') {rygoptions = 'y'}
   if(savedData[0][y].ryg == '🟢') {rygoptions = 'g'}
   if(savedData[0][y].ryg == '⚪') {rygoptions = '-'}
+  var dcby11options = ''
+  if(savedData[0][y].dcby11 == '✔️') {dcby11options = 'dcby11yes'}
+  if(savedData[0][y].dcby11 == '❌') {dcby11options = 'dcby11no'}
+  if(savedData[0][y].dcby11 == '-') {dcby11options = 'dcby11unsure'}
+  var readmissionriskoptions = ''
+  if(savedData[0][y].readmissionrisk == '✔️') {readmissionriskoptions = 'readmissionriskyes'}
+  if(savedData[0][y].readmissionrisk == '❌') {readmissionriskoptions = 'readmissionriskno'}
+  if(savedData[0][y].readmissionrisk == '❗️') {readmissionriskoptions = 'readmissionriskhigh'}
+  if(savedData[0][y].readmissionrisk == '-') {readmissionriskoptions = 'readmissionriskunsure'}
+  var teleoptions = ''
+  if(savedData[0][y].tele == '✔️') {teleoptions = 'teleyes'}
+  if(savedData[0][y].tele == '❌') {teleoptions = 'teleno'}
+  if(savedData[0][y].tele == '-') {teleoptions = 'teleunsure'}
   document.getElementById("roomNumber").setAttribute("value", jsondata[3]._cells[0].data);
   document.getElementById("patient").setAttribute("value", savedData[0][y].patient);
   document.getElementById("provider").setAttribute("value", savedData[0][y].provider);
@@ -69,14 +82,13 @@ function runCell(args){
   document.getElementById("target").setAttribute("value", savedData[0][y].target);
   document.getElementById("los").setAttribute("value", savedData[0][y].los);
   document.getElementById("elos").setAttribute("value", savedData[0][y].elos);
-  document.getElementById("dcby11").setAttribute("value", savedData[0][y].dcby11);
   document.getElementById("dcplan").setAttribute("value", savedData[0][y].dcplan);
   document.getElementById("barrier1").setAttribute("value", savedData[0][y].barrier1);
   document.getElementById("barrier2").setAttribute("value", savedData[0][y].barrier2);
-  document.getElementById("readmissionrisk").setAttribute("value", savedData[0][y].readmissionrisk);
-  document.getElementById("tele").setAttribute("value", savedData[0][y].tele);
   document.getElementById(rygoptions).setAttribute("checked", "True");
-
+  document.getElementById(dcby11options).setAttribute("checked", "True");
+  document.getElementById(readmissionriskoptions).setAttribute("checked", "True");
+  document.getElementById(teleoptions).setAttribute("checked", "True");
   cellOpen();
 }
 
