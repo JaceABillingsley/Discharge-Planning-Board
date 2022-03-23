@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Edit - DCPB</title>
+    <title>Edit</title>
     <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
     <link href='style.css' rel='stylesheet'>
+    <link rel="icon" href="icon.png">
   </head>
-  <body>
+  <body id='body'>
     <a href='/'><button width='10px;'>Go To View Only Mode</button></a>
     <div id="wrapper"></div>
       <div id="id01" class="modal">
@@ -89,18 +90,40 @@
           <label for="tele">No</label><br>
           <input type="radio" id="teleunsure" name="tele" value="-">
           <label for="tele">Unsure</label><br>
-          <br></br>      
-          <br></br>
-          <button type="submit">Update Patient Data</button>
+          </center>
         </div>
-        <div class="container" style="background-color:#f1f1f1">
-          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        </div>
+          <center>
+            <button type="submit" class='submitbtn'> &nbsp; &nbsp; &nbsp; Update Patient Data &nbsp; &nbsp; &nbsp; </button>
+          <button type="button" onclick="document.getElementById('id01').style.display='none'; document.getElementById('body').style.overflowY = 'scroll';" class="cancelbtn">Cancel</button>
+          <button type="button" onclick="document.getElementById('cleardataconfirm').style.display='block'" class='clearbtn'>Clear Patient</button>
+            <br></br>
+            <br></br>
+          </center>
       </form>
     </div>
+  </div>
+  <div id="cleardataconfirm" class="modal1">
+    <div class="modal-content1">
+      <center>
+        <h4>Are you sure you want to clear this patients data?</h4>
+      <button type="button" onclick="clearData();" class="cancelbtn">Clear</button>
+          <button type="button" onclick="document.getElementById('cleardataconfirm').style.display='none'" class='cancelbtn1'>Cancel</button>
+      </center>
+    </div>
+    
   </div>
   <script src="https://unpkg.com/gridjs@5.0.2/dist/gridjs.umd.js"></script>
   <script src="edit.js"></script>
   <script type="module">import { Grid, html } from "https://unpkg.com/gridjs?module";</script>
+  <script>
+  var modal = document.getElementById("cleardataconfirm");
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  document.getElementById("id01").style.overflowX = "hidden";
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </body>
 </html>

@@ -1,7 +1,13 @@
 function setElements(elements, y) {
   for (var i=0; i<11; i++) {document.getElementById(elements[i]).setAttribute("value", savedData[0][y][elements[i]])}
 };
+function clearElements(elements) {
+  for (var i=0; i<11; i++) {document.getElementById(elements[i]).setAttribute("value", '')}
+};
 function setChecked(elements) {
+  for (var i=0;i<4; i++) {document.getElementById(elements[i]).setAttribute("checked", "True")}
+};
+function clearChecked(elements) {
   for (var i=0;i<4; i++) {document.getElementById(elements[i]).setAttribute("checked", "True")}
 };
 function runCell(args){
@@ -24,13 +30,21 @@ function runCell(args){
   setElements(["patient", "provider", "rn", "status", "admit", "target", "los", "elos", "dcplan", "barrier1", "barrier2"], y)
   document.getElementById("roomNumber").setAttribute("value", args[3]._cells[0].data);
   document.getElementById('id01').style.display = "block"
+  document.getElementById("body").style.overflowY = "hidden";
+  $('#id01').animate({scrollTop : 0}, 'slow');
 };
+function clearData() {
+  clearElements(["patient", "provider", "rn", "status", "admit", "target", "los", "elos", "dcplan", "barrier1", "barrier2"]);
+  clearChecked(["-", "dcby11unsure", "teleunsure", "readmissionriskunsure"]);
+  document.getElementById('cleardataconfirm').style.display='none';
+  $('#id01').animate({scrollTop : 0}, 'slow');
+}
 function setRoom(value) {
   var list1 = [String(value)];
   for (var b = 0; b<18; b++) {list1.push(savedData[0][`r${value-1}`][["patient", "provider", "rn", "status", "admit", "target", "los", "elos", "ryg", "dcby11", "dcplan", "barrier1", "barrier2", "readmissionrisk", "tele"][b]])}
   return list1
 };
-fetch("./files/test.json").then(res => res.json()).then(data => printIt(data))
+fetch("./JSON/DCPB.json").then(res => res.json()).then(data => printIt(data))
 let printIt = (data) => {savedData = data; mainData()}
 function mainData() {
   const grid = new gridjs.Grid({

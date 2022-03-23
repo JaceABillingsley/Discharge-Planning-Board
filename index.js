@@ -12,7 +12,7 @@ router.get('/edit',function(req, res){res.sendFile(path.join(__dirname+'/edit.ht
 app.post('/pushdata', function (req, res) {
   var j = req.body;
   var data = [j.roomNumber, j.patient, j.provider, j.rn, j.status, j.admit, j.target, j.los, j.elos, j.ryg, j.dcby11, j.dcplan, j.barrier1, j.barrier2, j.readmissionrisk, j.tele];
-  fs.readFile('files/test.json', (err, data) => {if (err) throw err;
+  fs.readFile('JSON/DCPB.json', (err, data) => {if (err) throw err;
     var jsondata = JSON.parse(data);
     var y = `r${j.roomNumber-1}`
     function replaceEmptySpace(value) {
@@ -39,7 +39,7 @@ app.post('/pushdata', function (req, res) {
     if (teleoptions == 'n') {jsondata[0][y].tele = '❌'}
     else if (teleoptions == 'y') {jsondata[0][y].tele = '✔️'}
     else if (teleoptions == '-') {jsondata[0][y].tele = '-'}
-    fs.writeFile('files/test.json', JSON.stringify(jsondata), (err) => {if (err) throw err; res.redirect('/edit')});
+    fs.writeFile('JSON/DCPB.json', JSON.stringify(jsondata), (err) => {if (err) throw err; res.redirect('/edit')});
 })});
 
 app.use('/', router);
