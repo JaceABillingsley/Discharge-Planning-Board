@@ -4,8 +4,7 @@ function setRoom(value) {
   return(list1)
 };
 fetch("./files/test.json").then(res => res.json()).then(data => printIt(data))
-let printIt = (data) => {savedData = data;}
-setTimeout(() => {mainData()}, 100);
+let printIt = (data) => {savedData = data; mainData()}
 function mainData() {
   const grid = new gridjs.Grid({
   columns: [{name:"Bed #", }, {name:"Patient", width:"20px"}, {name:"Provider", width:"10px"},{name:"RN", width:"10px"}, {name:"Status", width:"10px"}, {name:"Admit", width:"10px"}, {name:"Target", width:"10px"}, {name:"LOS", width:"10px"}, {name:"ELOS", width:"10px"}, {name:"R/Y/G", width:"10px"}, {name:"D/C By 11", width:"10px"}, {name:"D/C Plan", width:"10px"}, {name:"Barrier 1", width:"10px"}, {name:"Barrier 2", width:"10px"}, {name:"Readmission Risk", width:"10px"}, {name:"Tele", width:"10px"}],
