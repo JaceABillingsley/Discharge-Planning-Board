@@ -2,17 +2,14 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require("body-parser");
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
 const path = require('path');
 const router = express.Router();
+app.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/index.html'));
-});
 
-router.get('/edit',function(req,res){
-  res.sendFile(path.join(__dirname+'/edit.html'));
-});
+router.get('/',function(req,res){res.sendFile(path.join(__dirname+'/view.html'));});
+
+router.get('/edit',function(req,res){res.sendFile(path.join(__dirname+'/edit.html'));});
 
 app.post('/pushdata', function (req, res) {
   var j = req.body
@@ -88,10 +85,6 @@ app.post('/pushdata', function (req, res) {
 //   });
 //   });
 // })
-              
-router.get('/test',function(req,res){
-  res.sendFile(path.join(__dirname+'/test.html'));
-});
 
 app.use('/', router);
 app.listen(process.env.port || 3000);
