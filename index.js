@@ -6,7 +6,7 @@ const path = require('path');
 const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var userAmount = 2
+var userAmount = 3
 
 app.post('/login', function (req, res) {
   fs.readFile('JSON/accounts.json', (err, data) => {
@@ -33,12 +33,13 @@ app.post('/dashboard', function (req, res) {
     if (req.body.psw == jsondata[0][req.body.uname].password) {
       var id = jsondata[0][req.body.uname].id
       res.redirect(`/dashboard?id=${id}`)
+      res.end()
     }
-    else {res.redirect('/errorlogin')}
+    else {res.redirect('/dashboard');res.end()}
   } 
      catch(error) {
       console.log(error)
-      try {res.redirect('/errorlogin')}
+      try {res.redirect('/errorlogin');res.end()}
       catch{var i = 0}
   }})
 });
@@ -84,6 +85,7 @@ router.get('/logindashboard',function(req, res){
 })
 router.get('/errorlogin',function(req, res){
   res.sendFile(path.join(__dirname+'/errorlogin.html'))
+  res.end()
 })
 router.get('/accountexists',function(req, res){
   res.sendFile(path.join(__dirname+'/accountexists.html'))
@@ -112,7 +114,7 @@ router.get('/dashboard',function(req, res){
     for(var i in json_data) {result.push(json_data[i])}
     for (var i = 1; i < userAmount; i++) {
       if (result[0][`id${i}`] == req.query.id) {
-        res.sendFile(path.join(__dirname+'/dashboard.html'))
+      res.sendFile(path.join(__dirname+'/dashboard.html'))
       }
     }
   res.sendFile(path.join(__dirname+'/errorlogin.html'))
