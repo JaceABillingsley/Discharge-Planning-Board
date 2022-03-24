@@ -7,11 +7,15 @@
     <link rel="icon" href="icon.png">
   </head>
   <body id='body'>
-    <a href='/'><button width='10px;'>Go To View Only Mode</button></a>
+    <button width='10px;' onclick='toView();'>Go To View Only Mode</button>
+    <button class='logout' style='margin-left: 50px;' onclick='logout();'> &nbsp; &nbsp; Log Out &nbsp; &nbsp; </button>
     <div id="wrapper"></div>
       <div id="id01" class="modal">
       <form class="modal-content animate" action="/pushdata" method="post">
         <div class="container">
+          <label for="id"><b>ID</b></label>
+          <input id="id" type="text" placeholder="ID" name="id" readonly="readonly">
+          
           <label for="roomNumber"><b>Room Number</b></label>
           <input id="roomNumber" type="text" placeholder="Room Number" name="roomNumber" readonly="readonly">
     
@@ -125,5 +129,6 @@
   document.getElementById("id01").style.overflowX = "hidden";
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src='logout.js'></script>
   </body>
 </html>

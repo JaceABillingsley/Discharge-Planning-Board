@@ -6,13 +6,62 @@ const path = require('path');
 const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/',function(req, res){res.sendFile(path.join(__dirname+'/view.html'));});
-router.get('/edit',function(req, res){res.sendFile(path.join(__dirname+'/edit.html'));});
+app.post('/login', function (req, res) {
+  fs.readFile('JSON/accounts.json', (err, data) => {
+    if (err) throw err;
+    var jsondata = JSON.parse(data);
+    if (req.body.psw == jsondata[0][req.body.uname].password) {
+      var id = jsondata[0][req.body.uname].id
+      res.redirect(`/edit?id=${id}`)
+    }
+    else {res.send('Incorrect Username/Password')}
+  })
+});
+
+router.get('/signup',function(req, res){
+  res.sendFile(path.join(__dirname+'/signup.html'))
+})
+
+router.get('/',function(req, res){
+  res.sendFile(path.join(__dirname+'/login.html'))
+})
+
+router.get('/edit',function(req, res){
+  var json_data = []
+  fs.readFile(`JSON/ids.json`, (err, data) => {
+    if (err) throw err; 
+    json_data = JSON.parse(data)
+    var result = [];
+    for(var i in json_data) {result.push(json_data[i].id)}
+    for (var i = 0; i < result.length; i++) {
+      if (result[i] == req.query.id) {
+        res.sendFile(path.join(__dirname+'/edit.html'))
+      }
+    }
+  })
+})
+
+router.get('/view',function(req, res){
+  var json_data = []
+  fs.readFile(`JSON/ids.json`, (err, data) => {
+    if (err) throw err; 
+    json_data = JSON.parse(data)
+    var result = [];
+    for(var i in json_data) {result.push(json_data[i].id)}
+    console.log(result)
+    for (var i = 0; i < result.length; i++) {
+      if (result[i] == req.query.id) {
+        res.sendFile(path.join(__dirname+'/view.html'))
+      }
+    }
+  })
+})
 
 app.post('/pushdata', function (req, res) {
   var j = req.body;
+  var id = j.id;
   var data = [j.roomNumber, j.patient, j.provider, j.rn, j.status, j.admit, j.target, j.los, j.elos, j.ryg, j.dcby11, j.dcplan, j.barrier1, j.barrier2, j.readmissionrisk, j.tele];
-  fs.readFile('JSON/DCPB.json', (err, data) => {if (err) throw err;
+  fs.readFile(`JSON/${id}.json`, (err, data) => {if (err) throw err;
     var jsondata = JSON.parse(data);
     var y = `r${j.roomNumber-1}`
     function replaceEmptySpace(value) {
@@ -39,7 +88,7 @@ app.post('/pushdata', function (req, res) {
     if (teleoptions == 'n') {jsondata[0][y].tele = '❌'}
     else if (teleoptions == 'y') {jsondata[0][y].tele = '✔️'}
     else if (teleoptions == '-') {jsondata[0][y].tele = '-'}
-    fs.writeFile('JSON/DCPB.json', JSON.stringify(jsondata), (err) => {if (err) throw err; res.redirect('/edit')});
+    fs.writeFile(`JSON/${id}.json`, JSON.stringify(jsondata), (err) => {if (err) throw err; res.redirect(`/edit?id=${id}`)});
 })});
 
 app.use('/', router);

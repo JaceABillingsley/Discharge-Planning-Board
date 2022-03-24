@@ -1,3 +1,8 @@
+const params = new URLSearchParams(location.search);
+var id = params.get('id');
+function toView() {
+  window.location.replace(`https://app.dc.jacebapps.com/view?id=${id}`);
+}
 function setElements(elements, y) {
   for (var i=0; i<11; i++) {document.getElementById(elements[i]).setAttribute("value", savedData[0][y][elements[i]])}
 };
@@ -11,6 +16,7 @@ function clearChecked(elements) {
   for (var i=0;i<4; i++) {document.getElementById(elements[i]).setAttribute("checked", "True")}
 };
 function runCell(args){
+  document.getElementById("id").setAttribute("value", id)
   var y = `r${args[3]._cells[0].data-1}`
   if (savedData[0][y].ryg == '🔴') {var rygoptions = 'r'}
   else if (savedData[0][y].ryg == '🟡') {var rygoptions = 'y'}
@@ -44,7 +50,7 @@ function setRoom(value) {
   for (var b = 0; b<18; b++) {list1.push(savedData[0][`r${value-1}`][["patient", "provider", "rn", "status", "admit", "target", "los", "elos", "ryg", "dcby11", "dcplan", "barrier1", "barrier2", "readmissionrisk", "tele"][b]])}
   return list1
 };
-fetch("./JSON/DCPB.json").then(res => res.json()).then(data => printIt(data))
+fetch(`./JSON/${id}.json`).then(res => res.json()).then(data => printIt(data))
 let printIt = (data) => {savedData = data; mainData()}
 function mainData() {
   const grid = new gridjs.Grid({
