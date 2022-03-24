@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Create Account</title>
+  <title>Login</title>
   <link rel='icon' href='icon.png' />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -128,20 +128,20 @@ span.psw {
 <body>
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action='/createaccount' method='post'>
-    <center><h1>Discharge Planning Board Create Account</h1></center>
+  <form class="modal-content animate" action="/login" method="post">
+    <center><h1>Discharge Planning Board Login</h1></center>
     <div class="imgcontainer">
       <img src="icon.png" alt="Avatar" class="avatar" width='75%' height='75%'>
     </div>
-
     <div class="container">
+      <center><h4 style='color: red'>Incorrect Username or Password</h4></center>
       <label for="uname"><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="uname" required>
 
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required>
         
-      <button type="submit">Create Account</button>
+      <button type="submit">Login</button>
 
     </div>
   </form>
