@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Edit</title>
+    <title>Dashboard</title>
     <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
     <link href='style2.css' rel='stylesheet'>
     <link rel="icon" href="icon.png">
@@ -18,24 +18,29 @@
           <div class="imgcontainer">
             <img src="icon.png" alt="Avatar" class="avatar" width='75%' height='75%'>
           </div>
-          <label for="hName"><b>Hospital Name</b></label>
-          <input id="hName" type="text" placeholder="Enter Name" name="hName">
+          <label for="uname"><p><b>Hospital Username</b></p></label>
+          <input id="uname" type="text" placeholder="Enter Name" name="uname">
 
-          <label for="id"><b>Hospital ID</b></label>
+          <label style='display: none;' for="psw"><p><b>Hospital Password</b></p></label>
+          <input style='display: none;' id="psw" type="text" placeholder="Enter Name" name="psw">
+          
+          <label style='display: none;' for="hName"><p><b>Hospital Name</b></p></label>
+          <input style='display: none;' id="hName" type="text" placeholder="Enter Name" name="hName">
+
+          <label for="id"><p><b>Hospital ID</b></p></label>
           <input id="id" type="text" placeholder="Enter Name" name="id" readonly='readonly'>
 
-          <label for="sUsername"><b>Staff Username</b></label>
+          <label for="sUsername"><p><b>Staff Username</b></p></label>
           <input id="sUsername" type="text" placeholder="Enter Username" name="sUsername" readonly="readonly">
 
-          <label for="sPassword"><b>Staff Password</b></label>
+          <label for="sPassword"><p><b>Staff Password</b></p></label>
           <input id="sPassword" type="text" placeholder="Enter Password" name="sPassword">
           
-          <label for="rCount"><b>Room Count</b></label>
+          <label for="rCount"><p style='color: red'><b style='color: black'>Room Count</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; Note<b>:</b> Chaning this field will wipe all patient data!</p></label>
           <input id="rCount" type="text" placeholder="Enter a Number" name="rCount">
-          
-          <label for="ePassword"><b>Edit Password</b></label>
+          <label for="ePassword"><p><b>Edit Password</b></p></label>
           <input id="ePassword" type="text" placeholder="Enter Password" name="ePassword">
-          <label for="ePasswordEnabled"><b>Edit Password Enabled</b></label>
+          <label for="ePasswordEnabled"><p><b>Edit Password Enabled</b></p></label>
           <input id="ePasswordEnabled" type="checkbox" name="ePasswordEnabled"><br>
           </center>
         </div>
@@ -49,6 +54,7 @@
     </div>
   </div>
   </div>
+  <script src='dashboard.js'></script>
   <script src="https://unpkg.com/gridjs@5.0.2/dist/gridjs.umd.js"></script>
   <script type="module">import { Grid, html } from "https://unpkg.com/gridjs?module";</script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

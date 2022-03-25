@@ -6,14 +6,12 @@ const path = require('path');
 const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var userAmount = 3
-
 app.post('/login', function (req, res) {
   fs.readFile('JSON/accounts.json', (err, data) => {
     try {
     if (err) throw err;
     var jsondata = JSON.parse(data);
-    if (req.body.psw == jsondata[0][req.body.uname].password) {
+    if (req.body.psw == jsondata[0][req.body.uname].staffpassword || req.body.psw == jsondata[0][req.body.uname].password) {
       var id = jsondata[0][req.body.uname].id
       res.redirect(`/view?id=${id}`)
     }
@@ -32,7 +30,7 @@ app.post('/dashboard', function (req, res) {
     var jsondata = JSON.parse(data);
     if (req.body.psw == jsondata[0][req.body.uname].password) {
       var id = jsondata[0][req.body.uname].id
-      res.redirect(`/dashboard?id=${id}`)
+      res.redirect(`/dashboard?uname=${req.body.uname}&psw=${req.body.psw}`)
       res.end()
     }
     else {res.redirect('/dashboard');res.end()}
@@ -47,23 +45,35 @@ app.post('/dashboard', function (req, res) {
 app.post('/createaccount', function (req, res) {
   username = req.body.uname
   password = req.body.psw
+  fs.readFile('JSON/users.json', (err, data) => {
+  if (err) throw err;
+  var userData = JSON.parse(data);
+  var userAmount = parseInt(userData[0].users) + 1
+  userData[0].users = String(parseInt(userData[0].users) + 1)
+  fs.writeFile(`JSON/users.json`, JSON.stringify(userData), (err) => {if (err) throw err;});
   fs.readFile(`JSON/accounts.json`, (err, data) => {if (err) throw err;
     var jsondata = JSON.parse(data);
-    var id = Math.random().toString(36).slice(18);
+    var id = Math.random().toString(36).slice(2);
     if (jsondata[0][req.body.uname] != null) {res.redirect('/accountexists')}
     else {
     jsondata[0][username] = {}
     jsondata[0][username].password = password
+    jsondata[0][username].username = username
     jsondata[0][username].id = id
+    jsondata[0][username].name = ""
+    jsondata[0][username].staffpassword = ""
+    jsondata[0][username].editpassword = ""
+    jsondata[0][username].editpasswordenabled = ""
+    jsondata[0][username].roomcount = "1"
     fs.readFile(`JSON/ids.json`, (err, data) => {if (err) throw err;
       var jsondata2 = JSON.parse(data);
       var i = userAmount
-      userAmount += 1
       jsondata2[0][`id${i}`] = id
       fs.writeFile(`JSON/ids.json`, JSON.stringify(jsondata2), (err) => {if (err) throw err;});
     fs.writeFile(`JSON/accounts.json`, JSON.stringify(jsondata), (err) => {if (err) throw err;});
+    
     try {
-      res.redirect(`/dashboard?id=${id}`)
+      res.redirect(`/dashboard?uname=${req.body.uname}&psw=${req.body.psw}`)
     }
     catch {
       var a1 = 0;
@@ -71,7 +81,41 @@ app.post('/createaccount', function (req, res) {
 })
 }
 });
+})
 });
+
+app.post('/dashboardsubmit', function (req, res) {
+  username = req.body.sUsername
+  password = req.body.psw
+  fs.readFile(`JSON/accounts.json`, (err, data) => {if (err) throw err;
+    var jsondata = JSON.parse(data);
+    var jsonvalue = "[{"
+    var oldroomcnt = jsondata[0][username].roomcount;
+    if (oldroomcnt != req.body.rCount) {
+      for (i = 0; i < parseInt(req.body.rCount); i++) {
+        jsonvalue += `"r${i}":{"patient":"-","provider":"-","rn":"-","status":"-","admit":"-","target":"-","los":"-","elos":"-","dcby11":"-","dcplan":"-","barrier1":"-","barrier2":"-","readmissionrisk":"-","tele":"-","ryg":"⚪"}`
+        if (i < parseInt(req.body.rCount)-1) {jsonvalue += ","}
+      }
+      jsonvalue += "}]"
+      fs.writeFile(`JSON/${req.body.id}.json`, jsonvalue, (err) => {if (err) throw err;});
+    }
+    jsondata[0][username].name = req.body.hname
+    jsondata[0][username].staffpassword = req.body.sPassword
+    jsondata[0][username].editpassword = req.body.ePassword
+    jsondata[0][username].editpasswordenabled = req.body.ePasswordEnabled
+    jsondata[0][username].roomcount = req.body.rCount
+    res.redirect(`/view?id=${req.body.id}`)
+    fs.writeFile(`JSON/accounts.json`, JSON.stringify(jsondata), (err) => {if (err) throw err;});
+})
+});
+
+router.get('/getjson',function(req, res){
+  fs.readFile(`JSON/accounts.json`, (err, data) => {
+    if (err) throw err; 
+    json_data = JSON.parse(data)
+    res.send(json_data[0][req.query.uname])
+  })
+})
 
 
 router.get('/signup',function(req, res){
@@ -91,6 +135,10 @@ router.get('/accountexists',function(req, res){
   res.sendFile(path.join(__dirname+'/accountexists.html'))
 })
 router.get('/edit',function(req, res){
+  fs.readFile('JSON/users.json', (err, data) => {
+  if (err) throw err;
+  var userData = JSON.parse(data);
+  var userAmount = parseInt(userData[0].users) + 1
   var json_data = []
   fs.readFile(`JSON/ids.json`, (err, data) => {
     if (err) throw err; 
@@ -104,35 +152,29 @@ router.get('/edit',function(req, res){
     }
   })
 })
+})
 
 router.get('/dashboard',function(req, res){
-  var json_data = []
-  fs.readFile(`JSON/ids.json`, (err, data) => {
-    if (err) throw err; 
-    json_data = JSON.parse(data)
-    var result = [];
-    for(var i in json_data) {result.push(json_data[i])}
-    for (var i = 1; i < userAmount; i++) {
-      if (result[0][`id${i}`] == req.query.id) {
-      res.sendFile(path.join(__dirname+'/dashboard.html'))
-      }
-    }
-  res.sendFile(path.join(__dirname+'/errorlogin.html'))
-  })
+  res.sendFile(path.join(__dirname+'/dashboard.html'))
 })
 
 router.get('/view',function(req, res){
-  var json_data = []
-  fs.readFile(`JSON/ids.json`, (err, data) => {
-    if (err) throw err; 
-    json_data = JSON.parse(data)
-    var result = [];
-    for(var i in json_data) {result.push(json_data[i])}
-    for (var i = 1; i < userAmount; i++) {
-      if (result[0][`id${i}`] == req.query.id) {
-        res.sendFile(path.join(__dirname+'/view.html'))
+  fs.readFile('JSON/users.json', (err, data) => {
+    if (err) throw err;
+    var userData = JSON.parse(data);
+    var userAmount = parseInt(userData[0].users) + 1
+    var json_data = []
+    fs.readFile(`JSON/ids.json`, (err, data) => {
+      if (err) throw err; 
+      json_data = JSON.parse(data)
+      var result = [];
+      for(var i in json_data) {result.push(json_data[i])}
+      for (var i = 1; i < userAmount; i++) {
+        if (result[0][`id${i}`] == req.query.id) {
+          res.sendFile(path.join(__dirname+'/view.html'))
+        }
       }
-    }
+    })
   })
 })
 
