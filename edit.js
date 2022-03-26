@@ -52,7 +52,7 @@ function setRoom(value, savedData) {
   for (var b = 0; b<18; b++) {list1.push(savedData[0][`r${value-1}`][["patient", "provider", "rn", "status", "admit", "target", "los", "elos", "ryg", "dcby11", "dcplan", "barrier1", "barrier2", "readmissionrisk", "tele"][b]])}
   return list1
 };
-fetch(`./JSON/${id}.json`).then(res => res.json()).then(data => printIt(data))
+fetch(`./JSON/${id}.env`).then(res => res.json()).then(data => printIt(data))
 let printIt = (data) => {mainData(data)}
 function mainData(savedData) {
   savedData2 = savedData

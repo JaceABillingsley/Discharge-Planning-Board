@@ -15,7 +15,7 @@ function setRoom(value, savedData) {
   return(list1)
 };
 
-fetch(`./JSON/${id}.json`).then(res => res.json()).then(data => printIt(data))
+fetch(`./JSON/${id}.env`).then(res => res.json()).then(data => printIt(data))
 let printIt = (data) => {mainData(data)}
 function mainData(savedData) {
   result = [];

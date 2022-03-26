@@ -7,7 +7,7 @@ const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/login', function (req, res) {
-  fs.readFile('JSON/accounts.json', (err, data) => {
+  fs.readFile('JSON/accounts.env', (err, data) => {
     try {
     if (err) throw err;
     var jsondata = JSON.parse(data);
@@ -24,7 +24,7 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/dashboard', function (req, res) {
-  fs.readFile('JSON/accounts.json', (err, data) => {
+  fs.readFile('JSON/accounts.env', (err, data) => {
     try {
     if (err) throw err;
     var jsondata = JSON.parse(data);
@@ -45,13 +45,13 @@ app.post('/dashboard', function (req, res) {
 app.post('/createaccount', function (req, res) {
   username = req.body.uname
   password = req.body.psw
-  fs.readFile('JSON/users.json', (err, data) => {
+  fs.readFile('JSON/users.env', (err, data) => {
   if (err) throw err;
   var userData = JSON.parse(data);
   var userAmount = parseInt(userData[0].users) + 1
   userData[0].users = String(parseInt(userData[0].users) + 1)
-  fs.writeFile(`JSON/users.json`, JSON.stringify(userData), (err) => {if (err) throw err;});
-  fs.readFile(`JSON/accounts.json`, (err, data) => {if (err) throw err;
+  fs.writeFile(`JSON/users.env`, JSON.stringify(userData), (err) => {if (err) throw err;});
+  fs.readFile(`JSON/accounts.env`, (err, data) => {if (err) throw err;
     var jsondata = JSON.parse(data);
     var id = Math.random().toString(36).slice(2);
     if (jsondata[0][req.body.uname] != null) {res.redirect('/accountexists')}
@@ -65,12 +65,12 @@ app.post('/createaccount', function (req, res) {
     jsondata[0][username].editpassword = ""
     jsondata[0][username].editpasswordenabled = ""
     jsondata[0][username].roomcount = "1"
-    fs.readFile(`JSON/ids.json`, (err, data) => {if (err) throw err;
+    fs.readFile(`JSON/ids.env`, (err, data) => {if (err) throw err;
       var jsondata2 = JSON.parse(data);
       var i = userAmount
       jsondata2[0][`id${i}`] = id
-      fs.writeFile(`JSON/ids.json`, JSON.stringify(jsondata2), (err) => {if (err) throw err;});
-    fs.writeFile(`JSON/accounts.json`, JSON.stringify(jsondata), (err) => {if (err) throw err;});
+      fs.writeFile(`JSON/ids.env`, JSON.stringify(jsondata2), (err) => {if (err) throw err;});
+    fs.writeFile(`JSON/accounts.env`, JSON.stringify(jsondata), (err) => {if (err) throw err;});
     
     try {
       res.redirect(`/dashboard?uname=${req.body.uname}&psw=${req.body.psw}`)
@@ -87,7 +87,7 @@ app.post('/createaccount', function (req, res) {
 app.post('/dashboardsubmit', function (req, res) {
   username = req.body.sUsername
   password = req.body.psw
-  fs.readFile(`JSON/accounts.json`, (err, data) => {if (err) throw err;
+  fs.readFile(`JSON/accounts.env`, (err, data) => {if (err) throw err;
     var jsondata = JSON.parse(data);
     var jsonvalue = "[{"
     var oldroomcnt = jsondata[0][username].roomcount;
@@ -97,7 +97,7 @@ app.post('/dashboardsubmit', function (req, res) {
         if (i < parseInt(req.body.rCount)-1) {jsonvalue += ","}
       }
       jsonvalue += "}]"
-      fs.writeFile(`JSON/${req.body.id}.json`, jsonvalue, (err) => {if (err) throw err;});
+      fs.writeFile(`JSON/${req.body.id}.env`, jsonvalue, (err) => {if (err) throw err;});
     }
     jsondata[0][username].name = req.body.hname
     jsondata[0][username].staffpassword = req.body.sPassword
@@ -105,12 +105,12 @@ app.post('/dashboardsubmit', function (req, res) {
     jsondata[0][username].editpasswordenabled = req.body.ePasswordEnabled
     jsondata[0][username].roomcount = req.body.rCount
     res.redirect(`/view?id=${req.body.id}`)
-    fs.writeFile(`JSON/accounts.json`, JSON.stringify(jsondata), (err) => {if (err) throw err;});
+    fs.writeFile(`JSON/accounts.env`, JSON.stringify(jsondata), (err) => {if (err) throw err;});
 })
 });
 
 router.get('/getjson',function(req, res){
-  fs.readFile(`JSON/accounts.json`, (err, data) => {
+  fs.readFile(`JSON/accounts.env`, (err, data) => {
     if (err) throw err; 
     json_data = JSON.parse(data)
     res.send(json_data[0][req.query.uname])
@@ -135,12 +135,12 @@ router.get('/accountexists',function(req, res){
   res.sendFile(path.join(__dirname+'/accountexists.html'))
 })
 router.get('/edit',function(req, res){
-  fs.readFile('JSON/users.json', (err, data) => {
+  fs.readFile('JSON/users.env', (err, data) => {
   if (err) throw err;
   var userData = JSON.parse(data);
   var userAmount = parseInt(userData[0].users) + 1
   var json_data = []
-  fs.readFile(`JSON/ids.json`, (err, data) => {
+  fs.readFile(`JSON/ids.env`, (err, data) => {
     if (err) throw err; 
     json_data = JSON.parse(data)
     var result = [];
@@ -159,12 +159,12 @@ router.get('/dashboard',function(req, res){
 })
 
 router.get('/view',function(req, res){
-  fs.readFile('JSON/users.json', (err, data) => {
+  fs.readFile('JSON/users.env', (err, data) => {
     if (err) throw err;
     var userData = JSON.parse(data);
     var userAmount = parseInt(userData[0].users) + 1
     var json_data = []
-    fs.readFile(`JSON/ids.json`, (err, data) => {
+    fs.readFile(`JSON/ids.env`, (err, data) => {
       if (err) throw err; 
       json_data = JSON.parse(data)
       var result = [];
@@ -182,7 +182,7 @@ app.post('/pushdata', function (req, res) {
   var j = req.body;
   var id = j.id;
   var data = [j.roomNumber, j.patient, j.provider, j.rn, j.status, j.admit, j.target, j.los, j.elos, j.ryg, j.dcby11, j.dcplan, j.barrier1, j.barrier2, j.readmissionrisk, j.tele];
-  fs.readFile(`JSON/${id}.json`, (err, data) => {if (err) throw err;
+  fs.readFile(`JSON/${id}.env`, (err, data) => {if (err) throw err;
     var jsondata = JSON.parse(data);
     var y = `r${j.roomNumber-1}`
     function replaceEmptySpace(value) {
@@ -209,7 +209,7 @@ app.post('/pushdata', function (req, res) {
     if (teleoptions == 'n') {jsondata[0][y].tele = '❌'}
     else if (teleoptions == 'y') {jsondata[0][y].tele = '✔️'}
     else if (teleoptions == '-') {jsondata[0][y].tele = '-'}
-    fs.writeFile(`JSON/${id}.json`, JSON.stringify(jsondata), (err) => {if (err) throw err; res.redirect(`/edit?id=${id}`)});
+    fs.writeFile(`JSON/${id}.env`, JSON.stringify(jsondata), (err) => {if (err) throw err; res.redirect(`/edit?id=${id}`)});
 })});
 
 app.use('/', router);
