@@ -62,8 +62,6 @@ app.post('/createaccount', function (req, res) {
     jsondata[0][username].id = id
     jsondata[0][username].name = ""
     jsondata[0][username].staffpassword = ""
-    jsondata[0][username].editpassword = ""
-    jsondata[0][username].editpasswordenabled = ""
     jsondata[0][username].roomcount = "1"
     fs.readFile(`JSON/ids.env`, (err, data) => {if (err) throw err;
       var jsondata2 = JSON.parse(data);
@@ -101,8 +99,7 @@ app.post('/dashboardsubmit', function (req, res) {
     }
     jsondata[0][username].name = req.body.hname
     jsondata[0][username].staffpassword = req.body.sPassword
-    jsondata[0][username].editpassword = req.body.ePassword
-    jsondata[0][username].editpasswordenabled = req.body.ePasswordEnabled
+    jsondata[0][username].password = req.body.psw
     jsondata[0][username].roomcount = req.body.rCount
     res.redirect(`/view?id=${req.body.id}`)
     fs.writeFile(`JSON/accounts.env`, JSON.stringify(jsondata), (err) => {if (err) throw err;});
@@ -113,8 +110,9 @@ router.get('/getjson',function(req, res){
   fs.readFile(`JSON/accounts.env`, (err, data) => {
     if (err) throw err; 
     json_data = JSON.parse(data)
+    if (req.query.psw == json_data[0][req.query.uname].password) {
     res.send(json_data[0][req.query.uname])
-  })
+  }})
 })
 
 

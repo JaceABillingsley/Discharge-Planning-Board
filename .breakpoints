@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "dashboard.html": [
+      {
+        "id": "084125aa-4e80-4ccb-b372-08cb10a1985d",
+        "line": 26,
+        "version": 2437,
+        "index": 1024
+      }
+    ]
+  }
 }
