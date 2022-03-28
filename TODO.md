@@ -1,0 +1,3 @@
+- Edit Mode Password
+- Better UI with Carrd
+- Auto Reload every 30 Seconds/RELOAD DATA https://gridjs.io/docs/examples/force-render
