@@ -9,7 +9,7 @@ function setElements(elements, y) {
   for (var i=0; i<11; i++) {document.getElementById(elements[i]).setAttribute("value", savedData2[0][y][elements[i]])}
 };
 function clearElements(elements) {
-  for (var i=0; i<11; i++) {document.getElementById(elements[i]).setAttribute("value", '')}
+  for (var i=0; i<11; i++) {document.getElementById(elements[i]).value = ''}
 };
 function setChecked(elements) {
   for (var i=0;i<4; i++) {document.getElementById(elements[i]).setAttribute("checked", "True")}
